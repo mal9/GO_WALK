@@ -2,10 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>LSApplicationCategoryType</key>
-	<array>
-		<string></string>
-	</array>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>Нужно разрешение на использование Вашего местоположения</string>
 	<key>NSLocationAlwaysUsageDescription</key>
@@ -34,7 +30,7 @@
 	<string>Main</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
-		<string>gps</string>
+		<string>armv7</string>
 	</array>
 	<key>UIStatusBarTintParameters</key>
 	<dict>

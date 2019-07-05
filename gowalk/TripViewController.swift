@@ -37,7 +37,6 @@ class TripViewController: UIViewController {
         
     var trip: Trip?
     
-    
     @IBOutlet weak var tripImage: UIImageView!
     @IBOutlet weak var tripDescription: UILabel!
     @IBOutlet weak var tripTime: UILabel!

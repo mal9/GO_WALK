@@ -7,40 +7,66 @@
 //
 
 import UIKit
-import GoogleMaps
+import CoreLocation
+import MapKit
 
 
-class SecondViewController: UIViewController {
+class SecondViewController: UIViewController, CLLocationManagerDelegate, MKMapViewDelegate {
     @IBOutlet weak var nameField: UITextField!
     @IBOutlet weak var descriptionField: UITextView!
     @IBOutlet weak var img_view: UIImageView!
+    @IBOutlet weak var mapView: MKMapView!
     let imagepicker = UIImagePickerController()
+    var locationManager: CLLocationManager!
+    var coordinate = [CLLocationCoordinate2D]()
     
-    /*override func loadView() {
-        // Create a GMSCameraPosition that tells the map to display the
-        // coordinate -33.86,151.20 at zoom level 6.
-        let camera = GMSCameraPosition.camera(withLatitude: -33.86, longitude: 151.20, zoom: 6.0)
-        let mapView = GMSMapView.map(withFrame: CGRect.zero, camera: camera)
-        view = mapView
+    func hexStringToUIColor (hex:String) -> UIColor {
+        var cString:String = hex.trimmingCharacters(in: .whitespacesAndNewlines).uppercased()
         
-        // Creates a marker in the center of the map.
-        let marker = GMSMarker()
-        marker.position = CLLocationCoordinate2D(latitude: -33.86, longitude: 151.20)
-        marker.title = "Sydney"
-        marker.snippet = "Australia"
-        marker.map = mapView
-    }*/
+        if (cString.hasPrefix("#")) {
+            cString.remove(at: cString.startIndex)
+        }
+        
+        if ((cString.count) != 6) {
+            return UIColor.gray
+        }
+        
+        var rgbValue:UInt32 = 0
+        Scanner(string: cString).scanHexInt32(&rgbValue)
+        
+        return UIColor(
+            red: CGFloat((rgbValue & 0xFF0000) >> 16) / 255.0,
+            green: CGFloat((rgbValue & 0x00FF00) >> 8) / 255.0,
+            blue: CGFloat(rgbValue & 0x0000FF) / 255.0,
+            alpha: CGFloat(1.0)
+        )
+    }
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        img_view.image = UIImage(named: "popich")
+        
+                navigationController?.navigationBar.barTintColor = hexStringToUIColor(hex: "#c9f452")
+        
+        
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager = CLLocationManager()
+            locationManager.delegate = self
+            locationManager.requestAlwaysAuthorization()
+            locationManager.desiredAccuracy = kCLLocationAccuracyBest
+            locationManager.startUpdatingLocation()
+        }
+        
+        img_view.image = UIImage(named: "MSK")
+        
         nameField.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
         nameField.layer.borderWidth = 1.0
         nameField.layer.cornerRadius = 5
         descriptionField.layer.borderColor = UIColor(red: 0.9, green: 0.9, blue: 0.9, alpha: 1.0).cgColor
         descriptionField.layer.borderWidth = 1.0
         descriptionField.layer.cornerRadius = 5
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -68,11 +94,28 @@ class SecondViewController: UIViewController {
                                name: name,
                                rating: 0, amountOfMarks: 0,
                                time: Int.random(in: 1 ... 240), createTime: Date(),
-                               image: img_view.image ?? UIImage(named: "popich")!)
+                               image: img_view.image ?? UIImage(named: "popich")!,
+                               coordinate: coordinate)
             let app = App.shared
             app.addTrip(Trip: newTrip)
         }
     }
+    
+    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+        let span = MKCoordinateSpan(latitudeDelta: 0.20, longitudeDelta: 0.20)
+        let region = MKCoordinateRegion(center: newLocation.coordinate, span: span)
+        mapView.setRegion(region, animated: true)
+    }
+    
+    @IBAction func addPin(_ sender: UILongPressGestureRecognizer) {
+        let location = sender.location(in: self.mapView)
+        let locCoord = self.mapView.convert(location, toCoordinateFrom: self.mapView)
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = locCoord
+        coordinate.append(locCoord)
+        self.mapView.addAnnotation(annotation)
+    }
+    
 }
 
 

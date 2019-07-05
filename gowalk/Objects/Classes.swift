@@ -21,7 +21,7 @@ class App {
     }
     
     func getTrips(){
-        
+        /*
         let tripsRef = Database
             .database(url: "https://gowalk-d1872.firebaseio.com/")
             .reference()
@@ -37,29 +37,31 @@ class App {
                 let amountOfMarks = Int(dict["amountOfMarks"] as? String ?? "")
                 let description = dict["description"] as? String ?? ""
                 let time = Int(dict["time"] as? String ?? "")
-                let createTime = Int(dict["name"] as? String ?? "")
-                //cTrips.append(Trip(description: description, name: name, ))
+                let createTime = Double(dict["name"] as? String ?? "")
+                let image = dict["image"] as? String ?? ""
+                cTrips.append(Trip(description: description, name: name, rating: rating!, amountOfMarks: amountOfMarks!, time: time!, createTime: Date(timeIntervalSince1970: createTime ?? 1562102042), image: UIImage(named: image) ?? UIImage(named: "popich")!, coordinate: []))
                 
             }
-    }
-        /*
+        self.trips = cTrips
+    }*/
+        
         trips = [Trip(description: """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim ligula molestie sapien lobortis malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Phasellus fermentum enim et porttitor auctor. Curabitur ac varius odio. Praesent accumsan est at arcu tempus mattis. Aenean lacus ex, interdum at mollis at, tempus nec ex. Nulla quam purus, blandit ac nunc sit amet, faucibus pharetra nunc. Nam consectetur libero augue, non volutpat tellus imperdiet ac.
             
-""", name: "Романтика", rating: 5, amountOfMarks:13, time: 200, createTime: Date(timeIntervalSince1970: 1562102042), image: UIImage(named: "popich")!),
+""", name: "Романтика", rating: 5, amountOfMarks:13, time: 200, createTime: Date(timeIntervalSince1970: 1562102042), image: UIImage(named: "MSK")!, coordinate: []),
         Trip(description: """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim ligula molestie sapien lobortis malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Phasellus fermentum enim et porttitor auctor. Curabitur ac varius odio. Praesent accumsan est at arcu tempus mattis. Aenean lacus ex, interdum at mollis at, tempus nec ex. Nulla quam purus, blandit ac nunc sit amet, faucibus pharetra nunc. Nam consectetur libero augue, non volutpat tellus imperdiet ac.
             
-""", name: "Туса с пацанами", rating: 4.04, amountOfMarks: 17, time: 300, createTime: Date(timeIntervalSince1970: 1562062042), image: UIImage(named: "popich")!),
+""", name: "Прогулка с собакой", rating: 4.04, amountOfMarks: 17, time: 300, createTime: Date(timeIntervalSince1970: 1562062042), image: UIImage(named: "park")!, coordinate: []),
         Trip(description: """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim ligula molestie sapien lobortis malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Phasellus fermentum enim et porttitor auctor. Curabitur ac varius odio. Praesent accumsan est at arcu tempus mattis. Aenean lacus ex, interdum at mollis at, tempus nec ex. Nulla quam purus, blandit ac nunc sit amet, faucibus pharetra nunc. Nam consectetur libero augue, non volutpat tellus imperdiet ac.
             
-""", name: "Утренняя пробежка", rating: 3.65, amountOfMarks:4, time: 400, createTime: Date(timeIntervalSince1970: 1162122042), image: UIImage(named: "popich")!),
+""", name: "Утренняя пробежка", rating: 3.65, amountOfMarks:4, time: 400, createTime: Date(timeIntervalSince1970: 1162122042), image: UIImage(named: "bannoe")!, coordinate: []),
         Trip(description: """
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut dignissim ligula molestie sapien lobortis malesuada. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti. Phasellus fermentum enim et porttitor auctor. Curabitur ac varius odio. Praesent accumsan est at arcu tempus mattis. Aenean lacus ex, interdum at mollis at, tempus nec ex. Nulla quam purus, blandit ac nunc sit amet, faucibus pharetra nunc. Nam consectetur libero augue, non volutpat tellus imperdiet ac.
             
-""", name: "Поход в кино", rating: 2.4, amountOfMarks:8, time: 500, createTime: Date(timeIntervalSince1970: 1562140042), image: UIImage(named: "popich")!)]
- */
+""", name: "Поход в кино", rating: 2.4, amountOfMarks:8, time: 500, createTime: Date(timeIntervalSince1970: 1562140042), image: UIImage(named: "с1")!, coordinate: [])]
+ 
     }
     
     func addTrip(Trip:Trip){
